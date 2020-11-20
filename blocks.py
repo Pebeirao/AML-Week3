@@ -45,7 +45,11 @@ def nll_forward(target_pred, target_true):
         the value of NLL for a given prediction and the ground truth
         scalar
     """
-    output = -1/len(target_pred)*np.sum(target_true*np.log(target_pred)+(1-target_true)*np.log((1-target_pred)))  
+    ones = np.ones(target_true.shape)
+    mult1 = np.multiply((ones-target_pred), np.log(ones-target_pred))
+    mult2 = np.multiply(target_pred, np.log(target_pred))
+    result = mult1 + mult2
+    output = np.mean(-result) 
     return output
 
 def nll_grad_input(target_pred, target_true):

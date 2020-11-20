@@ -1,0 +1,30 @@
+def conv_matrix(matrix, kernel):
+    """Perform the convolution of the matrix 
+        with the kernel using zero padding
+    # Arguments
+        matrix: input matrix np.array of size `(N, M)`
+        kernel: kernel of the convolution 
+            np.array of size `(2p + 1, 2q + 1)`
+    # Output
+        the result of the convolution
+        np.array of size `(N, M)`
+    """
+    matrix_x, matrix_y = matrix.shape
+    kernel_x, kernel_y = kernel.shape
+
+    # Empty output
+    output = np.zeros((matrix_x,matrix_y))
+
+    # Matrix padding 
+    pad_with_X = (int((kernel_x-1)/2)),(int((kernel_x-1)/2))
+    pad_with_Y = (int((kernel_y-1)/2)),(int((kernel_y-1)/2))
+
+    Matrix_Zpad = np.pad(matrix, (pad_with_X,pad_with_Y), 'constant', constant_values=(0))
+
+    
+    for x in range(matrix_x  ):
+        for y in range(matrix_y  ):
+            output[x,y] = np.sum(Matrix_Zpad[0+x:kernel_x+x,0+y:kernel_y+y]*kernel)
+    
+    
+    return output
